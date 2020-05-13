@@ -7,7 +7,7 @@
         <th>Time</th>
       </tr>
       <tr
-        v-for="stock in stockResponse"
+        v-for="stock in portfolio"
         :key="stock.symbol"
       >
         <td>{{ stock.symbol }}</td>
@@ -19,29 +19,21 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions, mapState } from 'vuex'
 
 export default {
-  data() {
-    return {
-      stockResponse: [],
-      tempStocksArray: 'BILI,AZUL,AMC,IIIV,CNK,GMBL,RCL,TEAM'
-    }
+  computed: {
+    ...mapState({
+      portfolio: state => state.indexInfo
+    })
   },
 
   mounted() {
-    this.temporaryGetStock()
+    this.getIndexInfo()
   },
 
   methods: {
-    async temporaryGetStock() {
-      let res = await axios.get(`https://financialmodelingprep.com/api/v3/stock/real-time-price/${this.tempStocksArray}`)
-      res.data.companiesPriceList.forEach(stock => {
-        let date = new Date()
-        stock.time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-        this.stockResponse.push(stock)
-      })
-    }
+    ...mapActions(['getIndexInfo'])
   }
 }
 </script>
