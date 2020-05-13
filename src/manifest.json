@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "My Robinhood Stocks",
+  "homepage_url": "http://localhost:8080/",
+  "description": "A safe and secure way of watching your Robinhood stocks and and lists.",
+  "default_locale": "en",
+  "permissions": [
+    "<all_urls>",
+    "*://*/*"
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "My Robinhood Stocks",
+    "default_icon": {
+      "19": "icons/19.png",
+      "38": "icons/38.png"
+    }
+  }
+}
