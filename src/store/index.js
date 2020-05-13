@@ -7,37 +7,40 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    portfolio: 'BILI,AZUL,AMC,IIIV,CNK,GMBL,RCL,TEAM,',
+    portfolio: '',
     indexInfo: [],
     searchResults: []
   },
   mutations: {
-    addToIndexInfo(state, index) {
-      state.indexInfo.push(index)
+    loadLocalStorage(state) {
+      state.portfolio = localStorage.getItem('my_portfolio_key')
     },
     addToPortfolio(state, symbol) {
       state.portfolio += (symbol + ',')
+      localStorage.setItem('my_portfolio_key', state.portfolio)
+    },
+    removeFromPortfolio(state, symbol) {
+      let portfolio = state.portfolio.split(',')
+      let index = portfolio.indexOf(symbol)
+      portfolio.splice(index, 1)
+      state.portfolio = portfolio.join(',')
+      localStorage.setItem('my_portfolio_key', state.portfolio)
+    },
+    removeSearchResults(state) {
+      state.searchResults = []
     }
   },
   actions: {
-    async getIndexInfo({ commit, state }) {
+    async getIndexInfo({ state }) {
       let res = await axios.get(
-        `https://financialmodelingprep.com/api/v3/stock/real-time-price/${state.portfolio}`
+        `https://financialmodelingprep.com/api/v3/quote/${state.portfolio}`
       )
 
-      if (!res.data.companiesPriceList) {
+      if (!res.data) {
         return
       }
 
-      state.indexInfo = []
-      res.data.companiesPriceList.forEach(stock => {
-        let date = new Date()
-        let hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
-        let minute = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
-        let second = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds()
-        stock.time = `${hour}:${minute}:${second}`
-        commit('addToIndexInfo', stock)
-      })
+      state.indexInfo = res.data
     },
     async performSearch({ state }, phrase) {
       state.searchResults.push({'symbol': 'nxt', 'name': 'next'})

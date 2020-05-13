@@ -17,6 +17,10 @@ export default {
     RobinhoodHeader,
     Listing,
     Search
+  },
+
+  created() {
+    this.$store.commit('loadLocalStorage')
   }
 }
 </script>

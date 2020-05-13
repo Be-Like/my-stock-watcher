@@ -7,13 +7,19 @@
         type="text"
         placeholder="Search for stock"
       >
+      <p
+        v-if="results.length > 0"
+        @click="removeSearchResults"
+      >
+        X
+      </p>
     </form>
-    <table>
+    <table v-if="results.length > 0">
       <tr>
         <th>Company</th>
         <th>Symbol</th>
         <th>Price</th>
-        <th>Day's %</th>
+        <th>&#8645;%</th>
       </tr>
       <tr
         v-for="stock in results"
@@ -60,7 +66,7 @@ export default {
 
   methods: {
     ...mapActions(['performSearch', 'getIndexInfo']),
-    ...mapMutations(['addToPortfolio']),
+    ...mapMutations(['addToPortfolio', 'removeSearchResults']),
     addStockToPortfolio(symbol) {
       this.addToPortfolio(symbol)
       this.getIndexInfo()
