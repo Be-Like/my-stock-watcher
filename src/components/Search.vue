@@ -1,20 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="performSearch(phrase)">
-      <input
-        class="form-group"
-        v-model="phrase"
-        type="text"
-        placeholder="Search for stock"
-      >
-      <p
-        v-if="results.length > 0"
-        @click="removeSearchResults"
-      >
-        X
-      </p>
-    </form>
-    <table v-if="results.length > 0">
+    <table>
       <tr>
         <th>Company</th>
         <th>Symbol</th>
@@ -52,12 +38,6 @@
 import { mapActions, mapState, mapMutations } from 'vuex'
 
 export default {
-  data() {
-    return {
-      phrase: ''
-    }
-  },
-
   computed: {
     ...mapState({
       results: state => state.searchResults
@@ -65,8 +45,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['performSearch', 'getIndexInfo']),
-    ...mapMutations(['addToPortfolio', 'removeSearchResults']),
+    ...mapActions(['getIndexInfo']),
+    ...mapMutations(['addToPortfolio']),
     addStockToPortfolio(symbol) {
       this.addToPortfolio(symbol)
       this.getIndexInfo()

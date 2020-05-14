@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!searching">
+  <div>
     <table>
       <tr>
         <th>Stock</th>
@@ -53,7 +53,6 @@ export default {
   computed: {
     ...mapState({
       portfolio: state => state.indexInfo,
-      searching: state => state.searchResults.length > 0
     })
   },
 
