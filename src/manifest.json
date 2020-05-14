@@ -1,9 +1,11 @@
 {
   "manifest_version": 2,
   "name": "My Stock Watcher",
-  "homepage_url": "http://localhost:8080/",
+  "version": "0.1.0",
   "description": "A readily accessible and clean way of watching the stocks you care about.",
   "default_locale": "en",
+  "author": "Jake Simpson",
+  "homepage_url": "https://www.linkedin.com/in/jake-simpson-2b464b118/",
   "permissions": [],
   "icons": {
     "16": "icons/icon-16.png",
