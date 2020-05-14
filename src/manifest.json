@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "My Stock Watcher",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "A readily accessible and clean way of watching the stocks you care about.",
   "default_locale": "en",
   "author": "Jake Simpson",
