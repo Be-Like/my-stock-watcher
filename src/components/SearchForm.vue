@@ -88,6 +88,7 @@ export default {
   }
 
   svg {
+    cursor: pointer;
     display: inline-block;
   }
 
