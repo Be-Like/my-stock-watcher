@@ -13,8 +13,12 @@
         class="stock-option"
       >
         <td>{{ stock.symbol }}</td>
-        <td>${{ stock.price.toFixed(2) }}</td>
-        <td>{{ stock.changesPercentage }} %</td>
+        <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
+          ${{ stock.price.toFixed(2) }}
+        </td>
+        <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
+          {{ stock.changesPercentage }} %
+        </td>
         <td>{{ getTime() }}</td>
         <td>
           <div class="dropdown">
@@ -106,6 +110,14 @@ export default {
     .stock-option:hover svg, svg:hover {
       visibility: visible;
     }
+  }
+
+  .positive-return {
+    color: #0bce1c;
+  }
+
+  .negative-return {
+    color: red;
   }
 
   .dropdown {
