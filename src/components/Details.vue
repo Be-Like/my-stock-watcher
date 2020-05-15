@@ -56,7 +56,7 @@
         </div>
         <div class="stat">
           <p><b>Range</b></p>
-          <p>{{ details.range }}</p>
+          <p>{{ convertRange(details.range) }}</p>
         </div>
         <div class="stat">
           <p><b>Price 50</b></p>
@@ -147,6 +147,11 @@ export default {
     ...mapMutations(['closeDetails']),
     currency(value) {
       return '$' + formatNumber(value, 2)
+    },
+    convertRange(value) {
+      let values = []
+      value.split('-').forEach(number => {values.push(this.currency(number))})
+      return values.join('-')
     },
     percentage(value) {
       return formatNumber(value, 3) + ' %'
