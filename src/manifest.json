@@ -6,6 +6,7 @@
   "default_locale": "en",
   "author": "Jake Simpson",
   "homepage_url": "https://www.linkedin.com/in/jake-simpson-2b464b118/",
+  "permissions": ["storage"],
   "icons": {
     "16": "icons/icon-16.png",
     "48": "icons/icon-48.png",
