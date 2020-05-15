@@ -52,6 +52,17 @@ export default {
   html {
     width: 400px;
     height: 400px;
+    overflow: scroll;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #0badd8 ;
+    border-radius: 25px;
+    border: 3px solid white;
   }
 
   .slide-fade-enter-active {
