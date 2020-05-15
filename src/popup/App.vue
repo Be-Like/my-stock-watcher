@@ -1,7 +1,10 @@
 <template>
   <div>
     <transition name="slide-fade" mode="out-in">
-      <div v-if="main" key="main">
+      <div
+        v-if="!$store.state.showDetails"
+        key="main"
+      >
         <robinhood-header />
         <SearchForm />
         <transition name="component-fade" mode="out-in">
@@ -9,10 +12,9 @@
         </transition>
       </div>
       <div v-else key="details">
-        <details />
+        <Details />
       </div>
     </transition>
-    <button @click="main = !main">Change view</button>
   </div>
 </template>
 
@@ -31,12 +33,6 @@ export default {
     Listing,
     SearchResults,
     Details
-  },
-
-  data() {
-    return {
-      main: true
-    }
   },
 
   computed: {

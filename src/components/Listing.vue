@@ -11,6 +11,7 @@
         v-for="stock in portfolio"
         :key="stock.symbol"
         class="stock-option"
+        @click="showDetails(stock)"
       >
         <td>{{ stock.symbol }}</td>
         <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
@@ -65,8 +66,8 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['removeFromPortfolio']),
-    ...mapActions(['getIndexInfo']),
+    ...mapMutations(['removeFromPortfolio', 'openDetails']),
+    ...mapActions(['getIndexInfo', 'getCompanyInfo']),
     getTime() {
       let date = new Date()
       let hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
@@ -77,6 +78,10 @@ export default {
     removeStock(symbol) {
       this.removeFromPortfolio(symbol)
       this.getIndexInfo()
+    },
+    showDetails(stock) {
+      this.getCompanyInfo(stock)
+      this.openDetails()
     }
   }
 }
