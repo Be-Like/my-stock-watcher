@@ -14,29 +14,126 @@
           <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
     </div>
-    <div class="trade-info">
-      <!--
-        Trade info includes:
-          avgVolume, change ($ amount?), changesPercentage,
-          dayHigh, dayLow, earningsAnnouncement, eps, lastDiv,
-          marketCap, open, pe, previousClose, price, priceAvg50,
-          priceAvg200, range, sharesOutstanding, volume,
-          yearHigh, yearLow
-       -->
+      <div class="row">
+        <div class="thirds">
+          <p><b>Price</b></p>
+          <p>{{ currency(details.price) }}</p>
+        </div>
+        <div class="thirds">
+          <p><b>&#8645;$</b></p>
+          <p>{{ currency(details.change) }}</p>
+        </div>
+        <div class="thirds">
+          <p><b>&#8645;%</b></p>
+          <p>{{ percentage(details.changesPercentage) }}</p>
+        </div>
+      </div>
+    <div class="row">
+      <div class="column">
+        <div class="stat">
+          <p><b>High</b></p>
+          <p>{{ currency(details.dayHigh) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Low</b></p>
+          <p>{{ currency(details.dayLow) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Open</b></p>
+          <p>{{ currency(details.open) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Prev Close</b></p>
+          <p>{{ currency(details.previousClose) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Dividends</b></p>
+          <p>{{ percentage(details.dividend) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Year High</b></p>
+          <p>{{ currency(details.yearHigh) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Range</b></p>
+          <p>{{ details.range }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Price 50</b></p>
+          <p>{{ currency(details.priceAvg50) }}</p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="stat">
+          <p><b>Volume</b></p>
+          <p>{{ wholeNumber(details.volume) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Avg Volume</b></p>
+          <p>{{ wholeNumber(details.avgVolume) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Market Cap</b></p>
+          <p>{{ currency(details.marketCap) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>EPS</b></p>
+          <p>{{ percentage(details.eps) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>P/E</b></p>
+          <p>{{ percentage(details.pe) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Year Low</b></p>
+          <p>{{ currency(details.yearLow) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>CSO</b></p>
+          <p>{{ wholeNumber(details.sharesOutstanding) }}</p>
+        </div>
+        <div class="stat">
+          <p><b>Price 200</b></p>
+          <p>{{ currency(details.priceAvg200) }}</p>
+        </div>
+      </div>
+      <div class="column">
+        <p class="earnings"><b>Earnings Announcement</b></p>
+      </div>
+      <div class="column">
+        <p class="earnings">{{ getDate(details.earningsAnnouncement) }}</p>
+      </div>
     </div>
     <div class="company-info">
-      <label for="company-description">Description</label>
+      <p><b>Description</b></p>
       <p>{{ details.description }}</p>
-      <!--
-        Company Info includes:
-        ceo, exchange, industry, name, sector, symbol, website
-       -->
+      <p><b>CEO</b></p>
+      <p>{{ details.ceo }}</p>
+
+      <div class="row">
+        <div class="column">
+          <p><b>Industry</b></p>
+          <p>{{ details.industry }}</p>
+          <p><b>Exchange</b></p>
+          <p>{{ details.exhange }}</p>
+          <p><b>Company Name</b></p>
+          <p>{{ details.name }}</p>
+        </div>
+        <div class="column">
+          <p><b>Sector</b></p>
+          <p>{{ details.sector }}</p>
+          <p><b>Website</b></p>
+          <p>{{ details.website }}</p>
+          <p><b>Symbol</b></p>
+          <p>{{ details.symbol }}</p>
+        </div>
+      </div>
     </div>
-    {{ details }}
   </div>
 </template>
 
 <script>
+import { formatNumber, formatDate } from '../misc/format'
 import { mapMutations, mapState, mapActions } from 'vuex'
 export default {
   computed: {
@@ -45,13 +142,21 @@ export default {
     })
   },
 
-  mounted() {
-    this.getCompanyInfo(this.details.symbol)
-  },
-
   methods: {
     ...mapActions(['getCompanyInfo']),
-    ...mapMutations(['closeDetails'])
+    ...mapMutations(['closeDetails']),
+    currency(value) {
+      return '$' + formatNumber(value, 2)
+    },
+    percentage(value) {
+      return formatNumber(value, 3) + ' %'
+    },
+    wholeNumber(value) {
+      return formatNumber(value)
+    },
+    getDate(date) {
+      return formatDate(date)
+    }
   }
 }
 </script>
@@ -71,5 +176,40 @@ export default {
         fill: red;
       }
     }
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+  }
+
+  .thirds {
+    display: inline-block;
+    text-align: center;
+    width: 33.333%;
+  }
+
+  .column {
+    display: inline-block;
+    width: 50%;
+  }
+
+  .stat {
+    padding: 0 10px;
+
+    p {
+      display: inline-block;
+      margin-top: 0;
+      width: 50%;
+
+      &:nth-child(even) {
+        text-align: right;
+      }
+    }
+  }
+
+  .earnings, .company-info {
+    padding: 0 10px;
   }
 </style>

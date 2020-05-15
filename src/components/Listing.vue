@@ -117,6 +117,10 @@ export default {
     }
   }
 
+  .stock-option {
+    cursor: pointer;
+  }
+
   .positive-return {
     color: #0bce1c;
   }

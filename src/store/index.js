@@ -74,7 +74,7 @@ export default new Vuex.Store({
       let details = stock
       let data = res.data.profile
 
-      details.lastDiv = data.lastDiv
+      details.dividend = data.lastDiv
       details.range = data.range
       details.industry = data.industry
       details.website = data.website
@@ -83,7 +83,6 @@ export default new Vuex.Store({
       details.sector = data.sector
 
       state.details = details
-      chrome.extension.getBackgroundPage().console.log('Details:', state.details);
     }
   },
   modules: {
