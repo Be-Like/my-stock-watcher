@@ -1,12 +1,18 @@
 <template>
   <div>
-    <robinhood-header />
-    <SearchForm />
-    <!-- <listing /> -->
-    <transition name="component-fade" mode="out-in">
-      <component :is="currentView" />
+    <transition name="slide-fade" mode="out-in">
+      <div v-if="main" key="main">
+        <robinhood-header />
+        <SearchForm />
+        <transition name="component-fade" mode="out-in">
+          <component :is="currentView" />
+        </transition>
+      </div>
+      <div v-else key="details">
+        <details />
+      </div>
     </transition>
-    <!-- <search-results /> -->
+    <button @click="main = !main">Change view</button>
   </div>
 </template>
 
@@ -15,6 +21,7 @@ import RobinhoodHeader from '../components/RobinhoodHeader'
 import SearchForm from '../components/SearchForm'
 import Listing from '../components/Listing'
 import SearchResults from '../components/Search'
+import Details from '../components/Details'
 
 export default {
   name: 'App',
@@ -22,7 +29,14 @@ export default {
     RobinhoodHeader,
     SearchForm,
     Listing,
-    SearchResults
+    SearchResults,
+    Details
+  },
+
+  data() {
+    return {
+      main: true
+    }
   },
 
   computed: {
@@ -42,6 +56,18 @@ export default {
   html {
     width: 400px;
     height: 400px;
+  }
+
+  .slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active below version 2.1.8 */ {
+    transform: translateX(10px);
+    opacity: 0;
   }
 
   .component-fade-enter-active, .component-fade-leave-active {
