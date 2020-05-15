@@ -44,3 +44,26 @@ export const formatDate = passedDate => {
 
   return `${monthNames[month]} ${day}, ${year}`
 }
+
+/**
+ * Format time as standard or military
+ * @param { Date } passedDate The date to format time from
+ * @param { Boolean } standard Is this standard or military time
+ * @returns { String } The string time
+ */
+export const formatTime = (passedDate, standard = false) => {
+  let date = new Date(passedDate)
+
+  let hour = date.getHours()
+  let minute = date.getMinutes()
+  minute = minute < 10 ? '0' + minute : minute
+  let second = date.getSeconds()
+  second = second < 10 ? '0' + second : second
+
+  if (standard) {
+    return
+  } else {
+    hour = hour < 10 ? `0${hour}` : hour
+    return `${hour}:${minute}:${second}`
+  }
+}

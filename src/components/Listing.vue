@@ -15,10 +15,10 @@
       >
         <td>{{ stock.symbol }}</td>
         <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
-          ${{ stock.price.toFixed(2) }}
+          {{ getNumber(stock.price, true) }}
         </td>
         <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
-          {{ stock.changesPercentage }} %
+          {{ getNumber(stock.changesPercentage, false) }}
         </td>
         <td>{{ getTime() }}</td>
         <td>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { formatNumber, formatTime } from '../misc/format'
 import { mapActions, mapState, mapMutations } from 'vuex'
 
 export default {
@@ -69,11 +70,12 @@ export default {
     ...mapMutations(['removeFromPortfolio', 'openDetails']),
     ...mapActions(['getIndexInfo', 'getCompanyInfo']),
     getTime() {
-      let date = new Date()
-      let hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
-      let minute = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
-      let second = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds()
-      return `${hour}:${minute}:${second}`
+      return formatTime(new Date)
+    },
+    getNumber(value, isCurrency) {
+      return isCurrency ?
+        '$' + formatNumber(value, 2) :
+        formatNumber(value, 3) + ' %'
     },
     removeStock(symbol) {
       this.removeFromPortfolio(symbol)
