@@ -21,7 +21,7 @@
           {{ getNumber(stock.changesPercentage, false) }}
         </td>
         <td>{{ getTime() }}</td>
-        <td>
+        <td @click.stop="">
           <div class="dropdown">
             <div class="dropdown-content">
               <p @click="removeStock(stock.symbol)">Delete</p>
