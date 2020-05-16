@@ -47,24 +47,36 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 export default {
-  data() {
-    return {
-      hideSearchbar: true,
-      phrase: ''
+  computed: {
+    ...mapState({
+      hideSearchbar: state => state.hideSearchbar,
+      searchPhrase: state => state.searchPhrase
+    }),
+    phrase: {
+      get() {
+        return this.searchPhrase
+      },
+      set(value) {
+        this.setSearchPhrase(value)
+      }
     }
   },
 
   methods: {
     ...mapActions(['performSearch']),
-    ...mapMutations(['removeSearchResults']),
+    ...mapMutations([
+      'removeSearchResults',
+      'setHideSearchbar',
+      'setSearchPhrase'
+    ]),
     closeSearch() {
       this.removeSearchResults()
-      this.hideSearchbar = !this.hideSearchbar
+      this.setHideSearchbar(true)
     },
     showSearch() {
-      this.hideSearchbar = !this.hideSearchbar
+      this.setHideSearchbar(false)
       this.$nextTick(() => {
         this.$refs.searchField.focus()
       })
