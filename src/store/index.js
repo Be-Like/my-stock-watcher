@@ -9,6 +9,8 @@ export default new Vuex.Store({
   state: {
     portfolio: '',
     indexInfo: [],
+    hideSearchbar: true,
+    searchPhrase: '',
     searchResults: [],
     showDetails: false,
     details: null
@@ -20,6 +22,12 @@ export default new Vuex.Store({
     addToPortfolio(state, symbol) {
       state.portfolio += (symbol + ',')
       localStorage.setItem('my_portfolio_key', state.portfolio)
+    },
+    setHideSearchbar(state, isHidden) {
+      state.hideSearchbar = isHidden
+    },
+    setSearchPhrase(state, phrase) {
+      state.searchPhrase = phrase
     },
     removeFromPortfolio(state, symbol) {
       let portfolio = state.portfolio.split(',')
@@ -51,7 +59,6 @@ export default new Vuex.Store({
       state.indexInfo = res.data
     },
     async performSearch({ state }, phrase) {
-      state.searchResults.push({'symbol': 'nxt', 'name': 'next'})
       let search = await axios.get(
         `https://financialmodelingprep.com/api/v3/search?query=${phrase}`
       )
