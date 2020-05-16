@@ -1,6 +1,7 @@
 {
-  "name": "my-robinhood-extension",
-  "version": "0.1.0",
+  "name": "my-stock-watcher",
+  "description": "A readily accessible and clean way of watching the stocks you care about.",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "client": "vue-cli-service build --mode development --watch",
