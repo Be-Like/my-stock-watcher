@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    alert: null,
     portfolio: '',
     indexInfo: [],
     hideSearchbar: true,
@@ -47,6 +48,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async setAlert({ state }, alert) {
+      state.alert = alert
+      await setTimeout(() => {state.alert = null}, 3000)
+    },
     async getIndexInfo({ state }) {
       let res = await axios.get(
         `https://financialmodelingprep.com/api/v3/quote/${state.portfolio}`

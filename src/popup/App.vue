@@ -1,5 +1,8 @@
 <template>
   <div>
+    <transition name="component-fade" mode="in-out">
+      <AlertBanner v-if="$store.state.alert" />
+    </transition>
     <transition name="slide-fade" mode="out-in">
       <div
         v-if="!$store.state.showDetails"
@@ -19,6 +22,7 @@
 </template>
 
 <script>
+import AlertBanner from '../components/AlertBanner'
 import RobinhoodHeader from '../components/RobinhoodHeader'
 import SearchForm from '../components/SearchForm'
 import Listing from '../components/Listing'
@@ -28,6 +32,7 @@ import Details from '../components/Details'
 export default {
   name: 'App',
   components: {
+    AlertBanner,
     RobinhoodHeader,
     SearchForm,
     Listing,
