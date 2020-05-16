@@ -21,7 +21,7 @@
         <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
           {{ getNumber(stock.changesPercentage, false) }}
         </td>
-        <td>
+        <td @click.stop="">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
