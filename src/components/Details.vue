@@ -123,7 +123,7 @@
           <p><b>Sector</b></p>
           <p>{{ details.sector }}</p>
           <p><b>Website</b></p>
-          <p>{{ details.website }}</p>
+          <a :href="details.website" target="_blank">{{ details.website }}</a>
           <p><b>Symbol</b></p>
           <p>{{ details.symbol }}</p>
         </div>
@@ -216,5 +216,10 @@ export default {
 
   .earnings, .company-info {
     padding: 0 10px;
+  }
+
+  a, a:visited {
+    color: #0badd8;
+    text-decoration: none;
   }
 </style>

@@ -11,11 +11,16 @@
         v-for="stock in results"
         :key="stock.symbol"
         class="stock-option"
+        @click="showDetails(stock)"
       >
         <td>{{ stock.name }}</td>
         <td>{{ stock.symbol }}</td>
-        <td>${{ stock.price.toFixed(2) }}</td>
-        <td>{{ stock.changesPercentage }} %</td>
+        <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
+          {{ getNumber(stock.price) }}
+        </td>
+        <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
+          {{ getNumber(stock.changesPercentage, false) }}
+        </td>
         <td>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -35,6 +40,7 @@
 </template>
 
 <script>
+import { formatNumber } from '../misc/format'
 import { mapActions, mapState, mapMutations } from 'vuex'
 
 export default {
@@ -45,11 +51,19 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getIndexInfo']),
-    ...mapMutations(['addToPortfolio']),
+    ...mapActions(['getIndexInfo', 'getCompanyInfo']),
+    ...mapMutations(['addToPortfolio', 'openDetails']),
     addStockToPortfolio(symbol) {
       this.addToPortfolio(symbol)
       this.getIndexInfo()
+    },
+    getNumber(value, isCurrency = true) {
+      return isCurrency ?
+        `$${formatNumber(value, 2)}` : `${formatNumber(value, 3)} %`
+    },
+    showDetails(stock) {
+      this.getCompanyInfo(stock)
+      this.openDetails()
     }
   }
 }
@@ -91,5 +105,17 @@ export default {
     .stock-option:hover svg, svg:hover {
       visibility: visible;
     }
+  }
+
+  .stock-option {
+    cursor: pointer;
+  }
+
+  .positive-return {
+    color: #0bce1c;
+  }
+
+  .negative-return {
+    color: red;
   }
 </style>
