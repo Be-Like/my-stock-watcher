@@ -9,7 +9,9 @@ export default new Vuex.Store({
   state: {
     portfolio: '',
     indexInfo: [],
-    searchResults: []
+    searchResults: [],
+    showDetails: false,
+    details: null
   },
   mutations: {
     loadLocalStorage(state) {
@@ -28,6 +30,12 @@ export default new Vuex.Store({
     },
     removeSearchResults(state) {
       state.searchResults = []
+    },
+    openDetails(state) {
+      state.showDetails = true
+    },
+    closeDetails(state) {
+      state.showDetails = false
     }
   },
   actions: {
@@ -57,6 +65,24 @@ export default new Vuex.Store({
         `https://financialmodelingprep.com/api/v3/quote/${quoteSearch}`
       )
       state.searchResults = res.data
+    },
+    async getCompanyInfo({ state }, stock) {
+      let res = await axios.get(
+        `https://financialmodelingprep.com/api/v3/company/profile/${stock.symbol}`
+      )
+
+      let details = stock
+      let data = res.data.profile
+
+      details.dividend = data.lastDiv
+      details.range = data.range
+      details.industry = data.industry
+      details.website = data.website
+      details.description = data.description
+      details.ceo = data.ceo
+      details.sector = data.sector
+
+      state.details = details
     }
   },
   modules: {
