@@ -68,7 +68,7 @@ export default {
 
   methods: {
     ...mapMutations(['removeFromPortfolio', 'openDetails']),
-    ...mapActions(['getIndexInfo', 'getCompanyInfo']),
+    ...mapActions(['getIndexInfo', 'getCompanyInfo', 'setAlert']),
     getTime() {
       return formatTime(new Date)
     },
@@ -80,6 +80,7 @@ export default {
     removeStock(symbol) {
       this.removeFromPortfolio(symbol)
       this.getIndexInfo()
+      this.setAlert({message: `Removed ${symbol}`, alertType: 'danger'})
     },
     showDetails(stock) {
       this.getCompanyInfo(stock)
