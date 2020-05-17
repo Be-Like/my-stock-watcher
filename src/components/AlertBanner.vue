@@ -1,6 +1,6 @@
 <template>
   <div class="banner">
-    <h2>{{ alert.message }}</h2>
+    <p>{{ alert.message }}</p>
   </div>
 </template>
 
@@ -16,8 +16,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  template {
+    position: absolute;
+  }
   .banner {
     background-color: green;
-    position: absolute;
+    height: 35px;
+
+    p {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 </style>
