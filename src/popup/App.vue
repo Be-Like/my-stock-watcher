@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transition name="component-fade" mode="in-out">
+    <transition name="component-fade">
       <AlertBanner v-if="$store.state.alert" />
     </transition>
     <transition name="slide-fade" mode="out-in">

@@ -80,7 +80,8 @@ export default {
     removeStock(symbol) {
       this.removeFromPortfolio(symbol)
       this.getIndexInfo()
-      this.setAlert({message: `Removed ${symbol}`, alertType: 'danger'})
+      let message =  `${symbol} has been removed from your portfolio`
+      this.setAlert({message, alertType: 'danger'})
     },
     showDetails(stock) {
       this.getCompanyInfo(stock)
