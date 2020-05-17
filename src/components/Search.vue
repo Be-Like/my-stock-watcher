@@ -51,11 +51,13 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getIndexInfo', 'getCompanyInfo']),
+    ...mapActions(['getIndexInfo', 'getCompanyInfo', 'setAlert']),
     ...mapMutations(['addToPortfolio', 'openDetails']),
     addStockToPortfolio(symbol) {
       this.addToPortfolio(symbol)
       this.getIndexInfo()
+      let message = `${symbol} has been added to your portfolio`
+      this.setAlert({message, alertType: 'info'})
     },
     getNumber(value, isCurrency = true) {
       return isCurrency ?
