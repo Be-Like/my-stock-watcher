@@ -53,4 +53,4 @@ I plan to release this in the Chrome Web Store. I am waiting on approval and wil
 ### Disclaimer
 The API used to get the stock information only provides updated information during market hours; and may not be as real time as professional tools used by stock brokers. 
 
-Though, from my experience with it, the information is very accurate.
+Though, from my experience with it, the information is pretty accurate.
