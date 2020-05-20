@@ -1,3 +1,6 @@
+# Temporarily Closed
+The api used to get the stock information has changed their business model and is no longer free. Poor timing.
+
 # My Stock Watcher
 
 ## Get Production Ready Extension from Chrome Web Store
