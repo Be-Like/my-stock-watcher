@@ -53,9 +53,13 @@ export default new Vuex.Store({
       await setTimeout(() => {state.alert = null}, 3000)
     },
     async getIndexInfo({ state }) {
+      console.log('Portfolio:', state.portfolio)
       let res = await axios.get(
-        `https://financialmodelingprep.com/api/v3/quote/${state.portfolio}`
+        `https://sandbox.tradier.com/v1/markets/quotes?symbols=${state.portfolio}`,
+        config
       )
+
+      console.log('Response: ', res.data)
 
       if (!res.data) {
         return
@@ -65,7 +69,9 @@ export default new Vuex.Store({
     },
     async performSearch({ state }, phrase) {
       let search = await axios.get(
-        `https://financialmodelingprep.com/api/v3/search?query=${phrase}`
+        // `https://financialmodelingprep.com/api/v3/search?query=${phrase}`
+        `https://sandbox.tradier.com/v1/markets/search?q=${phrase}`,
+        config
       )
 
       let quoteSearch = ''
