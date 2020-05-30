@@ -75,14 +75,16 @@ export default new Vuex.Store({
       )
 
       let quoteSearch = ''
-      search.data.forEach(stock => {
+      search.data.securities.security.forEach(stock => {
         quoteSearch += (stock.symbol + ',')
       })
 
       let res = await axios.get(
-        `https://financialmodelingprep.com/api/v3/quote/${quoteSearch}`
+        // `https://financialmodelingprep.com/api/v3/quote/${quoteSearch}`,
+        `https://sandbox.tradier.com/v1/markets/quotes?symbols=${quoteSearch}`,
+        config
       )
-      state.searchResults = res.data
+      state.searchResults = res.data.quotes.quote
     },
     async getCompanyInfo({ state }, stock) {
       let res = await axios.get(
