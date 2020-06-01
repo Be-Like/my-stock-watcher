@@ -14,11 +14,11 @@
         @click="showDetails(stock)"
       >
         <td>{{ stock.symbol }}</td>
-        <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
+        <td :class="stock.change >= 0 ? 'positive-return' : 'negative-return'">
           {{ getNumber(stock.price, true) }}
         </td>
-        <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
-          {{ getNumber(stock.changesPercentage, false) }}
+        <td :class="stock.change >= 0 ? 'positive-return' : 'negative-return'">
+          {{ getNumber(stock.change, false) }}
         </td>
         <td>{{ getTime() }}</td>
         <td @click.stop="">
