@@ -14,11 +14,11 @@
         @click="showDetails(stock)"
       >
         <td>{{ stock.symbol }}</td>
-        <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
-          {{ getNumber(stock.price, true) }}
+        <td :class="stock.change >= 0 ? 'positive-return' : 'negative-return'">
+          {{ getNumber(stock.ask, true) }}
         </td>
-        <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
-          {{ getNumber(stock.changesPercentage, false) }}
+        <td :class="stock.change >= 0 ? 'positive-return' : 'negative-return'">
+          {{ getNumber(stock.change, false) }}
         </td>
         <td>{{ getTime() }}</td>
         <td @click.stop="">
@@ -67,8 +67,8 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['removeFromPortfolio', 'openDetails']),
-    ...mapActions(['getIndexInfo', 'getCompanyInfo', 'setAlert']),
+    ...mapMutations(['removeFromPortfolio', 'openDetails', 'getCompanyInfo']),
+    ...mapActions(['getIndexInfo', 'setAlert']),
     getTime() {
       return formatTime(new Date)
     },

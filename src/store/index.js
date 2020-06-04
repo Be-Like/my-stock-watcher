@@ -3,6 +3,13 @@ import Vuex from 'vuex'
 
 import axios from 'axios'
 
+const config = {
+  headers: {
+    'Authorization': 'Bearer HGTjbbBbP8CS38Fn9h9CvNPMpG3V',
+    'Accept': 'application/json'
+  }
+}
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -20,8 +27,15 @@ export default new Vuex.Store({
     loadLocalStorage(state) {
       state.portfolio = localStorage.getItem('my_portfolio_key')
     },
+    getCompanyInfo(state, stock) {
+      state.details = stock
+    },
     addToPortfolio(state, symbol) {
-      state.portfolio += (symbol + ',')
+      if (state.portfolio === null) {
+        state.portfolio = (symbol)
+      } else {
+        state.portfolio += (',' + symbol)
+      }
       localStorage.setItem('my_portfolio_key', state.portfolio)
     },
     setHideSearchbar(state, isHidden) {
@@ -53,49 +67,49 @@ export default new Vuex.Store({
       await setTimeout(() => {state.alert = null}, 3000)
     },
     async getIndexInfo({ state }) {
+      if (state.portfolio == null) return
       let res = await axios.get(
-        `https://financialmodelingprep.com/api/v3/quote/${state.portfolio}`
+        `https://sandbox.tradier.com/v1/markets/quotes?symbols=${state.portfolio}`,
+        config
       )
 
       if (!res.data) {
         return
       }
 
-      state.indexInfo = res.data
+      state.indexInfo = (res.data.quotes.quote instanceof Array) ?
+        res.data.quotes.quote : [res.data.quotes.quote]
     },
     async performSearch({ state }, phrase) {
       let search = await axios.get(
-        `https://financialmodelingprep.com/api/v3/search?query=${phrase}`
+        `https://sandbox.tradier.com/v1/markets/search?q=${phrase}`,
+        config
       )
 
+      let searchResult = search.data.securities.security
+      if (!(searchResult instanceof Array)) {
+        searchResult = [searchResult]
+      }
+
       let quoteSearch = ''
-      search.data.forEach(stock => {
-        quoteSearch += (stock.symbol + ',')
+      searchResult.forEach(stock => {
+        if (quoteSearch === '') {
+          quoteSearch = (stock.symbol + ',')
+        } else {
+          quoteSearch += (stock.symbol + ',')
+        }
       })
 
       let res = await axios.get(
-        `https://financialmodelingprep.com/api/v3/quote/${quoteSearch}`
+        `https://sandbox.tradier.com/v1/markets/quotes?symbols=${quoteSearch}`,
+        config
       )
-      state.searchResults = res.data
+      if (res.data.quotes.quote instanceof Array) {
+        state.searchResults = res.data.quotes.quote
+      } else {
+        state.searchResults = [res.data.quotes.quote]
+      }
     },
-    async getCompanyInfo({ state }, stock) {
-      let res = await axios.get(
-        `https://financialmodelingprep.com/api/v3/company/profile/${stock.symbol}`
-      )
-
-      let details = stock
-      let data = res.data.profile
-
-      details.dividend = data.lastDiv
-      details.range = data.range
-      details.industry = data.industry
-      details.website = data.website
-      details.description = data.description
-      details.ceo = data.ceo
-      details.sector = data.sector
-
-      state.details = details
-    }
   },
   modules: {
   }

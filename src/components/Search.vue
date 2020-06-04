@@ -13,13 +13,13 @@
         class="stock-option"
         @click="showDetails(stock)"
       >
-        <td>{{ stock.name }}</td>
+        <td>{{ stock.description }}</td>
         <td>{{ stock.symbol }}</td>
-        <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
-          {{ getNumber(stock.price) }}
+        <td :class="stock.change >= 0 ? 'positive-return' : 'negative-return'">
+          {{ getNumber(stock.ask) }}
         </td>
-        <td :class="stock.changesPercentage >= 0 ? 'positive-return' : 'negative-return'">
-          {{ getNumber(stock.changesPercentage, false) }}
+        <td :class="stock.change >= 0 ? 'positive-return' : 'negative-return'">
+          {{ getNumber(stock.change_percentage, false) }}
         </td>
         <td @click.stop="">
           <svg
@@ -51,8 +51,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getIndexInfo', 'getCompanyInfo', 'setAlert']),
-    ...mapMutations(['addToPortfolio', 'openDetails']),
+    ...mapActions(['getIndexInfo', 'setAlert']),
+    ...mapMutations(['addToPortfolio', 'openDetails', 'getCompanyInfo']),
     addStockToPortfolio(symbol) {
       this.addToPortfolio(symbol)
       this.getIndexInfo()
