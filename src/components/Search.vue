@@ -51,8 +51,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getIndexInfo', 'getCompanyInfo', 'setAlert']),
-    ...mapMutations(['addToPortfolio', 'openDetails']),
+    ...mapActions(['getIndexInfo', 'setAlert']),
+    ...mapMutations(['addToPortfolio', 'openDetails', 'getCompanyInfo']),
     addStockToPortfolio(symbol) {
       this.addToPortfolio(symbol)
       this.getIndexInfo()

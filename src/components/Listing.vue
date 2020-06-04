@@ -15,7 +15,7 @@
       >
         <td>{{ stock.symbol }}</td>
         <td :class="stock.change >= 0 ? 'positive-return' : 'negative-return'">
-          {{ getNumber(stock.price, true) }}
+          {{ getNumber(stock.ask, true) }}
         </td>
         <td :class="stock.change >= 0 ? 'positive-return' : 'negative-return'">
           {{ getNumber(stock.change, false) }}
@@ -67,8 +67,8 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['removeFromPortfolio', 'openDetails']),
-    ...mapActions(['getIndexInfo', 'getCompanyInfo', 'setAlert']),
+    ...mapMutations(['removeFromPortfolio', 'openDetails', 'getCompanyInfo']),
+    ...mapActions(['getIndexInfo', 'setAlert']),
     getTime() {
       return formatTime(new Date)
     },

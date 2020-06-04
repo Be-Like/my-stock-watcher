@@ -14,7 +14,6 @@
           <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
     </div>
-    {{ details }}
     <div class="row">
       <div class="thirds">
         <p><b>Price</b></p>
@@ -51,10 +50,6 @@
           <p><b>Dividends</b></p>
           <p>{{ percentage(details.dividend) }}</p>
         </div> -->
-        <div class="stat">
-          <p><b>Year High</b></p>
-          <p>{{ currency(details.week_52_high) }}</p>
-        </div>
         <!-- <div class="stat">
           <p><b>Range</b></p>
           <p>{{ convertRange(details.range) }}</p>
@@ -85,6 +80,10 @@
           <p><b>P/E</b></p>
           <p>{{ percentage(details.pe) }}</p>
         </div> -->
+        <div class="stat">
+          <p><b>Year High</b></p>
+          <p>{{ currency(details.week_52_high) }}</p>
+        </div>
         <div class="stat">
           <p><b>Year Low</b></p>
           <p>{{ currency(details.week_52_low) }}</p>
@@ -135,7 +134,7 @@
 
 <script>
 import { formatNumber, formatDate } from '../misc/format'
-import { mapMutations, mapState, mapActions } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
   computed: {
     ...mapState({
@@ -144,8 +143,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getCompanyInfo']),
-    ...mapMutations(['closeDetails']),
+    ...mapMutations(['closeDetails', 'getCompanyInfo']),
     currency(value) {
       return '$' + formatNumber(value, 2)
     },

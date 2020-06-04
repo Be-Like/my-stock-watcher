@@ -27,6 +27,9 @@ export default new Vuex.Store({
     loadLocalStorage(state) {
       state.portfolio = localStorage.getItem('my_portfolio_key')
     },
+    getCompanyInfo(state, stock) {
+      state.details = stock
+    },
     addToPortfolio(state, symbol) {
       if (state.portfolio === null) {
         state.portfolio = (symbol)
@@ -92,10 +95,8 @@ export default new Vuex.Store({
       searchResult.forEach(stock => {
         if (quoteSearch === '') {
           quoteSearch = (stock.symbol + ',')
-          console.log(quoteSearch)
         } else {
           quoteSearch += (stock.symbol + ',')
-          console.log(quoteSearch)
         }
       })
 
@@ -109,27 +110,6 @@ export default new Vuex.Store({
         state.searchResults = [res.data.quotes.quote]
       }
     },
-    async getCompanyInfo({ state }, stock) {
-      // let res = await axios.get(
-      //   `https://financialmodelingprep.com/api/v3/company/profile/${stock.symbol}`
-      // )
-
-      let details = stock
-      // let data = res.data.profile
-
-      console.log('Details', details)
-      // console.log('Data', data)
-
-      // details.dividend = data.lastDiv
-      // details.range = data.range
-      // details.industry = data.industry
-      // details.website = data.website
-      // details.description = data.description
-      // details.ceo = data.ceo
-      // details.sector = data.sector
-
-      state.details = details
-    }
   },
   modules: {
   }
